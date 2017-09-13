@@ -1,11 +1,27 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+
 
 # Create your models here.
-class test_job_app(models.Model):
-    username = models.CharField(max_length=10, null=False)
-    password = models.CharField(max_length=1o, null=False)
-    objects = test_job_app_manager()
+
+Base = declarative_base()
+
+
+class Companies(Base):
+    __tablename__ = 'companies'
+    id = Column(Integer, primaary_key=True)
+    name = Column(String)
+    
+    def __init__(self,name):
+        self.name = name
+        
     def __str__(self):
-    return self.test_job_name + ' & ' + self.app
+        return u"Company Name (%s)" % (self.name)
+    
+    def __repr__(self):
+        return u"Company Name (%s)" % (self.name)
+    
+    
