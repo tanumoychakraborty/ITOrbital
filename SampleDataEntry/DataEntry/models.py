@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
-from django.db import models
-from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.sql.schema import ForeignKeyConstraint
 
 
 # Create your models here.
@@ -13,9 +13,9 @@ Base = declarative_base()
 class Companies(Base):
     __tablename__ = 'companies'
     id = Column('id', Integer, primaary_key=True, autoincrement=True)
-    name = Column('name', String(50))
+    name = Column('name', String(50), nullable=False)
     
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
         
     def __str__(self):
@@ -24,10 +24,9 @@ class Companies(Base):
     def __repr__(self):
         return u"Company Name (%s)" % (self.name)
     
+
+class Factors(Base):
+    __tablename__ = 'factors'
+    __table_args__ = (ForeignKeyConstraint(['company_id'], ['companies.id']), {'autoload':True})
+    company = relationship('companies', backref= backref('cars', lazy='dynamic'))
     
-    
-class Company_Factors(models.Model):
-    __tablename__ = 'company_factors'
-    id = Column('id', Integer, primary_key=True, autoincrement=True)
-    company_id = Column('company_id', Integer, ForeignKey('companies.id'))
-    company = relationship('Companies', primaryjoin = 'Companies.id == Company_Factors.company_id')
