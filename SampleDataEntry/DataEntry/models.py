@@ -1,21 +1,15 @@
 from __future__ import unicode_literals
 
 from sqlalchemy import Column, Integer, String
-import sqlalchemy, sqlalchemy.orm
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.sql.schema import ForeignKeyConstraint
-
-from DataEntry.model_managers.db_helper import createDBEngine
+from DataEntry.model_managers.db_helper import DBFactory
 
 
 # Create your models here.
-#Session = sqlalchemy.orm.sessionmaker(bind=engine)
-#session = Session()
-#Base.metadata.create_all(engine)
-Base = declarative_base()        
-Base.metadata.bind = createDBEngine()
-
+db = 'dataentry'
+factory = DBFactory(db)
+Base = factory.getDBBase()
 
 class Companies(Base):
     __tablename__ = 'companies'

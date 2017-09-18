@@ -25,12 +25,13 @@ SECRET_KEY = 'v)uq@c5-0-dibi%%k5et!cki097by$d2_%359#6bl4dhlf&q1f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'DataEntry.apps.DataentryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

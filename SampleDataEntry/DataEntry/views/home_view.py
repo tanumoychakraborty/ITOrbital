@@ -5,27 +5,17 @@ Created on 16-Sep-2017
 '''
 from django.http.response import HttpResponse
 from django.template import loader
-import sqlalchemy.orm
-
-from DataEntry.models import Companies, Factors
 from DataEntry.views.data_entry_template_view import DataEntryTemplate
+from DataEntry.model_managers.all_details_form import getAllData
 
 
 class HomeView(DataEntryTemplate):
     
     def get(self, request):
-        
-        engine = sqlalchemy.create_engine("postgresql://tanumoy:password@localhost/dataentry", echo=True)
-        Session = sqlalchemy.orm.sessionmaker(bind=engine)
-        session = Session()
-        #Base.metadata.create_all(engine)
-        factors = session.query(Factors).all()
-        for factor in factors:
-            print factor.id
-            print factor.company.name
-        
+        header, payload = getAllData()
         request.session = {
-            'companies' : factors,
+            'header' : header,
+            'payload' : payload,
             }
-        template = loader.get_template('dashboard/detailed_automation_report.html')           
+        template = loader.get_template('DataEntry/home.html')           
         return HttpResponse(template.render(request.session, request))
