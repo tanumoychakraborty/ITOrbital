@@ -6,7 +6,8 @@ Created on 16-Sep-2017
 
 
 from django.conf.urls import url
-from SampleDataEntry.DataEntry.views.home_view import HomeView
+
+from DataEntry.views.home_view import HomeView
 
 
 urlpatterns = [
