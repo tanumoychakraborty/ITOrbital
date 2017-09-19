@@ -6,7 +6,7 @@ Created on 16-Sep-2017
 from django.http.response import HttpResponse
 from django.template import loader
 from DataEntry.views.data_entry_template_view import DataEntryTemplate
-from DataEntry.model_managers.all_details_form import getAllData
+from DataEntry.model_managers.all_details_manager import getAllData
 
 
 class HomeView(DataEntryTemplate):
