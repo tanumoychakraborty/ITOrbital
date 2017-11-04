@@ -59,14 +59,6 @@ public class Twitterr {
         	company.add("@Hudson_NL");
         	companies.add(company);
         	company = new ArrayList<String>();
-        	company.add("hudsonamericas");
-        	company.add("@HudsonAmericas");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("usgpeoplenl");
-        	company.add("@USGPeopleNL");
-        	companies.add(company);
-        	company = new ArrayList<String>();
         	company.add("werkenbijusg");
         	company.add("@werkenbijusg");
         	companies.add(company);
