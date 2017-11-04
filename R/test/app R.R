@@ -1,4 +1,4 @@
-recr=read.csv(file.choose(),header=TRUE,sep=",")
+recr=read.csv(file.choose(), header=TRUE, sep=",")
 com=data.frame(recr$Company.Names)
 app=recr$App
 d=data.frame(app)
