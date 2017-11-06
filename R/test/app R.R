@@ -2,8 +2,6 @@ recr=read.csv(file.choose(),header=TRUE)
 com=data.frame(recr$Company.Names)
 app=recr$App
 d=data.frame(app)
-aa=c("Robert Half","Dhr International","Sthree PLC","Heidrick & Struggles","On Assignment","True Blue","Volt Information Sciences","Hudson Global","USG People","Practicus",
-"Robert Walters","Kforce","Korn Ferry","Randstad","Kelly Services","Manpower Group","Page Group","Brunel")
 
 aa1=c("Robert Half 
 Dhr International 
