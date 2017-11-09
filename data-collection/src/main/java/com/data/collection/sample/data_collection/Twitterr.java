@@ -1,5 +1,10 @@
 package com.data.collection.sample.data_collection;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +19,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class Twitterr {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
         	ConfigurationBuilder cb = new ConfigurationBuilder();
         	cb.setDebugEnabled(true)
@@ -63,22 +68,6 @@ public class Twitterr {
         	company.add("@werkenbijusg");
         	companies.add(company);
         	company = new ArrayList<String>();*/
-        	company.add("UsgSpainIT");
-        	company.add("@UsgSpainIT");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("usgfinancenl");
-        	company.add("@USGFinanceNL");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("usgpeople");
-        	company.add("@USGPeople");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("practicusltd");
-        	company.add("@PracticusLtd");
-        	companies.add(company);
-        	company = new ArrayList<String>();
         	company.add("practicushealth");
         	company.add("@PracticusHealth");
         	companies.add(company);
@@ -86,9 +75,16 @@ public class Twitterr {
         	company.add("practicuscareer");
         	company.add("@PracticusCareer");
         	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("practicusltd");
+        	company.add("@PracticusLtd");
+        	companies.add(company);
         	
+        	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\tanumoy\\ITOrbital\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
         	
         	for(List<String> compan:companies){
+        		writer.write("============================== "+compan+" ==================================\r\n");
+        		System.out.println("============================== "+compan+" ==================================");
         		for(String comp:compan){
         			paging = new Paging();
         			paging.count(400);
@@ -104,7 +100,8 @@ public class Twitterr {
 		        		size = uniqueTweets.size();
 		        		uniqueTweets.add(status.getText());
 		        		if(size < uniqueTweets.size()){
-			                //System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText() + " ::: liked By::: " + status.getFavoriteCount() + " ::: retwitted By::: " + status.getRetweetCount());
+		        			writer.write("@" + status.getUser().getScreenName() + " - " + status.getText() + " ::: liked By::: " + status.getFavoriteCount() + " ::: retwitted By::: " + status.getRetweetCount()+"\r\n	");
+			                System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText() + " ::: liked By::: " + status.getFavoriteCount() + " ::: retwitted By::: " + status.getRetweetCount());
 			                score++;
 			                score = (float) (score + (status.getFavoriteCount()*0.5));
 			                score = score + (status.getRetweetCount());
@@ -114,10 +111,12 @@ public class Twitterr {
 	        	}
         		
         		}
+        		writer.write("Final Count =============== "+score+ " for "+ compan.get(0)+"\r\n");
         		System.out.println("Final Count =============== "+score+ " for "+ compan.get(0));
         		score = 0;
         		uniqueTweets = new HashSet<String>();
         	}
+        	writer.close();
         	/*Query query = new Query("practicus OR practicusltd");
         	query.setCount(100);
             QueryResult result;
