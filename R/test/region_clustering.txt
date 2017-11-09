@@ -1,0 +1,42 @@
+##Clustering of companies on basis of regions
+
+library(cluster)                         ##loading package cluster
+
+cluster=read.csv(file.choose(),header=T,sep=",")  ##choosing file named:region.csv
+na.omit(cluster)                                  ## removing na values in data
+names(cluster)                                    ##to get the names of variable in the data
+head(cluster)
+y1=cluster$Region.Asia                         ##assigning new variables to each of the regions
+y2=cluster$Region.Europe
+y3=cluster$Region.Middle.East
+y4=cluster$Region.Africa
+y5=cluster$Region.North.America
+y6=cluster$Region.South.America
+y7=cluster$Region.Australasia
+y8=cluster$Region.British.Isles
+
+Y=cbind(y1,y2,y3,y4,y5,y6,y7,y8)     ##combining all the region varibles in a matrix form
+Y=data.frame(Y)
+distance=daisy(Y,metric ="euclidean")  ##calculating distance matrix
+summary(distance)
+km=pam(distance,diss = TRUE,k =2)  ##k-means clusering is performed assuming 2 clusters
+s=km$clustering                                     ##Mathematical expression specifying which company is in which cluster
+sil=silhouette(s,distance)          
+plot(sil,col=c("red","blue"),main="Silhouette Plot for k=2")    ## Average Silhouette width 0.55
+
+km1=pam(distance,diss = TRUE,k =3)
+s1=km1$clustering
+sil1=silhouette(s1,distance)
+plot(sil1,col=c("red","blue","green"),main="Silhouette Plot for k=3") ##Average Silhouette width 0.57
+
+km2=pam(distance,diss = TRUE,k =4)
+s2=km2$clustering
+sil2=silhouette(s2,distance)
+plot(sil2,col=c("red","blue","green","yellow"),main="Silhouette Plot for k=4") ##Average Silhouette width 0.48
+
+##We consider k=3 as the optimum number of cluster since it has maximum Average Silhouette width
+
+##Used for alternative depiction of clusters:
+
+clusplot(km1,sil1[0,0],color=TRUE, shade=TRUE, 
+         labels=2,lines=0,xlab="",ylab="")      ##Graphical representation of how the companies are grouped into 3 clusters
