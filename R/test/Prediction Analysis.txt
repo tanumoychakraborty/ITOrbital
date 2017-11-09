@@ -1,0 +1,49 @@
+##Model fitting with the data of 70 companies-------------------------------------
+
+library(faraway)                               ##downloading faraway package
+recr=read.csv(file.choose(),header=T,sep=",")  ##reading the file: SeventyCompanies.csv
+recr
+names(recr)  ## to check the names of variables present in the data set
+
+
+###considering the scores taken for ranking of the companies and 
+  ###standardizing to fit the model for Gaussian distribution
+
+rank=recr$Rank_score
+meu=mean(rank)            ##mean of the ranking scores
+stdv=sd(rank)             ##SD of the ranking scores
+y=(rank-meu)/stdv         ##Standardizing the ranks of the companies 
+y
+X=recr[,4:13]             ## all the factors are considered
+names(X)
+
+X[,6]=as.numeric(X[,6])   ##X[,6]= employee strength is changed to
+                                                  ## quantitative variable                                                                                                                                                 
+Y=cbind(y,X)           
+
+fit=glm(y~.,data=data.frame(Y),family=gaussian)  ## we fit a generalized 
+                                                   linear model      
+ ###as y has been standardized we take normal distribution   
+      
+summary(fit)
+vif(fit)                 ## vif is calculated to check multicollinearity in data
+v=as.vector(vif(fit))
+v                       ## all vif being below 10 we accept the model and 
+                          ##assume X's are independent 
+#------------------------------------------------------------------------
+
+##Prediction for rank score of Practicus
+
+pract=read.csv(file.choose(),header=T,sep=",") ## we read the data named: Practicus.csv
+pract
+
+pr.prac=predict(fit,pract,type="response")  ## rank of Practicus is predicted
+pr.prac
+rank_pr=(pr.prac*stdv)+meu    ##since we used standarised ranks scores of companies
+                              ##to predict the rank score of Practicus so we get the
+                              ##predicted rank score of Practicus using the formula
+
+rank_pr                       ## rank_score is -2786243
+
+
+
