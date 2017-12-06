@@ -22,5 +22,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/orbital java temp and resources/ojdbc6-46105.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
