@@ -1,5 +1,10 @@
 package com.data.collection.sample.data_collection;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,10 +25,19 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.Authorization;
 import twitter4j.conf.ConfigurationBuilder;
 
+
+
+
 public class Twitterr {
 
+<<<<<<< HEAD
     public static void main(String[] args) throws IOException {
 try{
+=======
+    public static void main(String[] args) throws IOException, SQLException {
+        
+    	try{
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
     		
     		try{
     			
@@ -48,7 +62,38 @@ try{
         	int size = 0;
         	List<List<String>> companies = new ArrayList<List<String>>();
         	List<String> company = new ArrayList<String>();
+<<<<<<< HEAD
 
+=======
+/*        	company.add("hudson_BE");
+        	company.add("@Hudson_BE");
+        	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("HudsonRPO");
+        	company.add("@HudsonRPO");
+        	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("HudsonFrance");
+        	company.add("@HudsonFrance");
+        	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("Hudson_Spain");
+        	company.add("@Hudson_Spain");
+        	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("HudsonITUK_I");
+        	company.add("@HudsonITUK_I");
+        	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("Hudson_NL");
+        	company.add("@Hudson_NL");
+        	companies.add(company);
+        	company = new ArrayList<String>();
+        	company.add("werkenbijusg");
+        	company.add("@werkenbijusg");
+        	companies.add(company);
+        	company = new ArrayList<String>();*/
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
         	/*company.add("practicushealth");//last portion of url
         	company.add("@PracticusHealth");//profile name twitter
         	companies.add(company);*/
@@ -62,11 +107,22 @@ try{
         	companies.add(company);*/
         	
         	company = new ArrayList<String>();
+<<<<<<< HEAD
         	company.add("tbstaffing");
         	company.add("@TBStaffing");
         	companies.add(company);
         	
         	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\TRIPARNA\\ITOrbital\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
+=======
+        	//company.add("practicushealth");
+        	
+        	company.add("tbstaffing");
+        	//company.add("@PracticusHealth");
+        	company.add("@TBStaffing");
+        	companies.add(company);
+        	
+        	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("D:\\orbital java temp and resources\\orbital_project\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
         	
         	
 				Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -101,7 +157,11 @@ try{
 			                score = (float) (score + (status.getFavoriteCount()*0.5));
 			                score = score + (status.getRetweetCount());
 			                
+<<<<<<< HEAD
 			                PreparedStatement stm=con.prepareStatement("insert into Tweet_info values(?,?,?,?,?,?)");
+=======
+			                PreparedStatement stm=con.prepareStatement("insert into Tweet_info2 values(?,?,?,?,?,?)");
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 			    			
 			                stm.setLong(1, status.getId());
 			                stm.setString(2,comp);
@@ -111,14 +171,22 @@ try{
 			                stm.setInt(6,status.getRetweetCount());
 			                
 			                /*stm.addBatch();
+<<<<<<< HEAD
 			            	stm.executeBatch(); */
+=======
+			            	stm.executeBatch();*/
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 			    			
 		        		}
 		        		
 		        		
 		            }
 		        	paging.maxId(id-1);
+<<<<<<< HEAD
 		        		
+=======
+		        	
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 	        	}
 	        	
     			con.commit();
