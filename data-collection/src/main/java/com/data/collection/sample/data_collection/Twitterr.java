@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +23,12 @@ import twitter4j.conf.ConfigurationBuilder;
 public class Twitterr {
 
     public static void main(String[] args) throws IOException {
-        try {
+try{
+    		
+    		try{
+    			
+    		
+    	try {
         	ConfigurationBuilder cb = new ConfigurationBuilder();
         	cb.setDebugEnabled(true)
         	  .setOAuthConsumerKey("37RxL0ssR8Rzznlcf6jkph9lB")
@@ -40,48 +48,35 @@ public class Twitterr {
         	int size = 0;
         	List<List<String>> companies = new ArrayList<List<String>>();
         	List<String> company = new ArrayList<String>();
-/*        	company.add("hudson_BE");
-        	company.add("@Hudson_BE");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("HudsonRPO");
-        	company.add("@HudsonRPO");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("HudsonFrance");
-        	company.add("@HudsonFrance");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("Hudson_Spain");
-        	company.add("@Hudson_Spain");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("HudsonITUK_I");
-        	company.add("@HudsonITUK_I");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("Hudson_NL");
-        	company.add("@Hudson_NL");
-        	companies.add(company);
-        	company = new ArrayList<String>();
-        	company.add("werkenbijusg");
-        	company.add("@werkenbijusg");
-        	companies.add(company);
-        	company = new ArrayList<String>();*/
-        	company.add("practicushealth");
-        	company.add("@PracticusHealth");
-        	companies.add(company);
-        	company = new ArrayList<String>();
+
+        	/*company.add("practicushealth");//last portion of url
+        	company.add("@PracticusHealth");//profile name twitter
+        	companies.add(company);*/
+        	/*company = new ArrayList<String>();
         	company.add("practicuscareer");
         	company.add("@PracticusCareer");
         	companies.add(company);
         	company = new ArrayList<String>();
         	company.add("practicusltd");
         	company.add("@PracticusLtd");
+        	companies.add(company);*/
+        	
+        	company = new ArrayList<String>();
+        	company.add("tbstaffing");
+        	company.add("@TBStaffing");
         	companies.add(company);
         	
-        	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\tanumoy\\ITOrbital\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
+        	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\TRIPARNA\\ITOrbital\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
         	
+        	
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SYSTEM","Welcome1234");
+		
+			//con.setAutoCommit(false);
+			
+			//Statement stmt=con.createStatement();
+			        	
         	for(List<String> compan:companies){
         		writer.write("============================== "+compan+" ==================================\r\n");
         		System.out.println("============================== "+compan+" ==================================");
@@ -105,17 +100,37 @@ public class Twitterr {
 			                score++;
 			                score = (float) (score + (status.getFavoriteCount()*0.5));
 			                score = score + (status.getRetweetCount());
+			                
+			                PreparedStatement stm=con.prepareStatement("insert into Tweet_info values(?,?,?,?,?,?)");
+			    			
+			                stm.setLong(1, status.getId());
+			                stm.setString(2,comp);
+			                stm.setString(3, status.getUser().getScreenName());
+			                stm.setString(4,status.getText());
+			                stm.setInt(5, status.getFavoriteCount());
+			                stm.setInt(6,status.getRetweetCount());
+			                
+			                /*stm.addBatch();
+			            	stm.executeBatch(); */
+			    			
 		        		}
+		        		
+		        		
 		            }
 		        	paging.maxId(id-1);
+		        		
 	        	}
-        		
+	        	
+    			con.commit();
         		}
+        	
         		writer.write("Final Count =============== "+score+ " for "+ compan.get(0)+"\r\n");
         		System.out.println("Final Count =============== "+score+ " for "+ compan.get(0));
         		score = 0;
         		uniqueTweets = new HashSet<String>();
+        		
         	}
+        	con.close();
         	writer.close();
         	/*Query query = new Query("practicus OR practicusltd");
         	query.setCount(100);
@@ -140,11 +155,22 @@ public class Twitterr {
             }*/
         	
             System.exit(0);
+            
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to lookup users: " + te.getMessage());
             System.exit(-1);
         }
+    		}catch(Exception e){
+    			e.printStackTrace();
+    		}
+    	}catch(Exception e){
+			e.printStackTrace();
+		}
+    	
+        
+		
     }
 
 }
+
