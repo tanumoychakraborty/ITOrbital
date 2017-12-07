@@ -22,6 +22,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
+	<classpathentry kind="lib" path="D:/ojdbc6-46105.jar"/>
+=======
 	<classpathentry kind="lib" path="D:/orbital java temp and resources/ojdbc6-46105.jar"/>
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

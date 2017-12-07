@@ -10,6 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,9 +30,14 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class Twitterr {
 
+<<<<<<< HEAD
+    public static void main(String[] args) throws IOException {
+try{
+=======
     public static void main(String[] args) throws IOException, SQLException {
         
     	try{
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
     		
     		try{
     			
@@ -54,6 +62,9 @@ public class Twitterr {
         	int size = 0;
         	List<List<String>> companies = new ArrayList<List<String>>();
         	List<String> company = new ArrayList<String>();
+<<<<<<< HEAD
+
+=======
 /*        	company.add("hudson_BE");
         	company.add("@Hudson_BE");
         	companies.add(company);
@@ -82,6 +93,7 @@ public class Twitterr {
         	company.add("@werkenbijusg");
         	companies.add(company);
         	company = new ArrayList<String>();*/
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
         	/*company.add("practicushealth");//last portion of url
         	company.add("@PracticusHealth");//profile name twitter
         	companies.add(company);*/
@@ -95,6 +107,13 @@ public class Twitterr {
         	companies.add(company);*/
         	
         	company = new ArrayList<String>();
+<<<<<<< HEAD
+        	company.add("tbstaffing");
+        	company.add("@TBStaffing");
+        	companies.add(company);
+        	
+        	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\TRIPARNA\\ITOrbital\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
+=======
         	//company.add("practicushealth");
         	
         	company.add("tbstaffing");
@@ -103,6 +122,7 @@ public class Twitterr {
         	companies.add(company);
         	
         	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("D:\\orbital java temp and resources\\orbital_project\\ITOrbital\\data-collection\\data.txt"), "utf-8"));
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
         	
         	
 				Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -137,7 +157,11 @@ public class Twitterr {
 			                score = (float) (score + (status.getFavoriteCount()*0.5));
 			                score = score + (status.getRetweetCount());
 			                
+<<<<<<< HEAD
+			                PreparedStatement stm=con.prepareStatement("insert into Tweet_info values(?,?,?,?,?,?)");
+=======
 			                PreparedStatement stm=con.prepareStatement("insert into Tweet_info2 values(?,?,?,?,?,?)");
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 			    			
 			                stm.setLong(1, status.getId());
 			                stm.setString(2,comp);
@@ -147,14 +171,22 @@ public class Twitterr {
 			                stm.setInt(6,status.getRetweetCount());
 			                
 			                /*stm.addBatch();
+<<<<<<< HEAD
+			            	stm.executeBatch(); */
+=======
 			            	stm.executeBatch();*/
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 			    			
 		        		}
 		        		
 		        		
 		            }
 		        	paging.maxId(id-1);
+<<<<<<< HEAD
+		        		
+=======
 		        	
+>>>>>>> 7d6b417f7506951bc624e805226d163fc3150b31
 	        	}
 	        	
     			con.commit();
@@ -209,3 +241,4 @@ public class Twitterr {
     }
 
 }
+
