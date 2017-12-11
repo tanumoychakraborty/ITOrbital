@@ -1,5 +1,4 @@
 library(tidytext)
-
 library(tm)
 library(plyr)
 library(dplyr)
@@ -30,14 +29,16 @@ tw_cln[i]=removeWords(as.character(tw[i]), cl_list)
 
 }
 
+files=c("C:/Users/User/Documents/anger.jpeg","C:/Users/User/Documents/antic.jpeg","C:/Users/User/Documents/disgust.jpeg","C:/Users/User/Documents/fear.jpeg","C:/Users/User/Documents/joy.jpeg","C:/Users/User/Documents/sadness.jpeg","C:/Users/User/Documents/surprise.jpeg","C:/Users/User/Documents/trust.jpeg","C:/Users/User/Documents/negative.jpeg","C:/Users/User/Documents/positive.jpeg")
 for(i in 1:length(tw_cln)){
 if(tw_cln[i]=="")
 tw_cln[i]=NA
 }
 tw_cln=na.omit(tw_cln)
 
-sent_posts=rep(0,length(tw))
+for(j in 1:10){
 
+sent_posts=rep(0,length(tw))
 
   for(i in 2:length(tw_cln)){
 
@@ -46,18 +47,23 @@ sent_posts=rep(0,length(tw))
        names(sentiment_scores)="scores"
        sentiment_scores=cbind("sentiment"=rownames(sentiment_scores),sentiment_scores)
        rownames(sentiment_scores)=NULL
-     if(sentiment_scores[4,2]>0){   ##fear sentiment
+     if(sentiment_scores[j,2]>0){   
      sent_posts[i]=tw_cln[i]
      }else{ 
      sent_posts[i]=NA
    }
 }
+
 sent_posts
 sent_posts2=na.omit(sent_posts)
 length(sent_posts2)
-sentiment_scores   
+senti=as.vector(sentiment_scores$sentiment)
+cat("percentage people expressing ",senti[j]," is ",length(sent_posts2)/length(tw)*100, "\n")
 pal=brewer.pal(8,"Dark2")
-
+jpeg(files[j])
 wordcloud(sent_posts2,min.freq=2,max.words=1000,width=30000,height=3000,random.order=F,color=pal)
+dev.off()
+
+}
 
 
