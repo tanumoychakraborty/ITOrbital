@@ -1,0 +1,13 @@
+
+SPOOL from database to file in csv format
+
+SET ECHO OFF
+SET TERMOUT OFF
+SET TRIMSPOOL ON
+SET PAGESIZE 0
+SET LINESIZE 2000
+SET FEEDBACK OFF
+spool C:\Users\User\Desktop\spool_demo.txt
+select tweet_id ||'$'||profile_name||'$'||tweet||'$'||likes||'$'||retweets
+from tweet_info;
+spool off;
