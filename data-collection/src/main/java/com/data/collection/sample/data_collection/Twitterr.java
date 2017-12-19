@@ -1,9 +1,12 @@
 package com.data.collection.sample.data_collection;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +31,8 @@ public class Twitterr {
 
 	public static void main(String[] args) throws IOException {
 		List<String> company = new ArrayList<String>();
-		company.add("AdeccoWaytoWork");
-		company.add("@AdeccoWaytoWork");
+		company.add("ManUtd");
+		company.add("@ManUtd");
 		companies.add(company);
 		/*company = new ArrayList<String>();
 		company.add("practicuscareer");
@@ -62,7 +65,7 @@ public class Twitterr {
 			int size = 0;
 
 			Writer writer = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream("C:\\Users\\tanumoy\\ITOrbital\\ITOrbital\\data-collection\\data.txt"),
+					new FileOutputStream("data.txt"),
 					"utf-8"));
 
 			for (List<String> compan : companies) {
@@ -84,6 +87,7 @@ public class Twitterr {
 							uniqueTweetIDs.add(id);
 							if (size < uniqueTweetIDs.size()) {
 								TwitterDTO tweet = new TwitterDTO();
+								tweet.setCompanyName(compan.get(1));
 								if(status.isRetweet())
 									tweet.setStatus(status.getRetweetedStatus().getText());
 								else
@@ -186,7 +190,10 @@ public class Twitterr {
 
 					for (Status tweet : tweets){
 						if (Twitterr.tweets.keySet().contains(tweet.getInReplyToStatusId())) {
-							Twitterr.tweets.get(tweet.getInReplyToStatusId()).setComment(tweet.getId(), tweet.getText());
+							CommentDTO comment = new CommentDTO();
+							comment.setComment(tweet.getText());
+							comment.setLikes(tweet.getFavoriteCount());
+							Twitterr.tweets.get(tweet.getInReplyToStatusId()).setComment(tweet.getId(), comment);
 						}
 					}
 					/*if (all.size() > 0) {
@@ -212,8 +219,65 @@ public class Twitterr {
 	}
 
 	public static void printAndWrite(Writer writer) throws IOException{
+		File t = new File("tweet.csv");
+		if(t.exists())
+			t.delete();
+		BufferedWriter twr = new BufferedWriter(new FileWriter(t));
+		PrintWriter tpw = new PrintWriter(new File("tweet.csv"));
+        StringBuilder tsb = new StringBuilder();
+        
+        File c = new File("comment.csv");
+		if(c.exists())
+			c.delete();
+		BufferedWriter cwr = new BufferedWriter(new FileWriter(c));
+		PrintWriter cpw = new PrintWriter(new File("comment.csv"));
+        StringBuilder csb = new StringBuilder();
+        
+        tsb.append("Company Name");
+        tsb.append(",");
+        tsb.append("Tweet ID");
+        tsb.append(",");
+        tsb.append("Tweet");
+        tsb.append(",");
+        tsb.append("Liked By");
+        tsb.append(",");
+        tsb.append("Shared By");
+        tsb.append("\n");
+        
+        csb.append("Company Name");
+        csb.append(",");
+        csb.append("Tweet ID");
+        csb.append(",");
+        csb.append("Comment");
+        csb.append(",");
+        csb.append("Liked By");
+        csb.append("\n");
+        
 		for(TwitterDTO tweet : Twitterr.tweets.values()){
-			writer.write("TWEET ### "+tweet.getStatus()+"\n");
+			tsb.append(tweet.getCompanyName());
+	        tsb.append(",");
+	        tsb.append(tweet.getId().toString());
+	        tsb.append(",");
+	        tsb.append(tweet.getStatus());
+	        tsb.append(",");
+	        tsb.append(tweet.getLiked());
+	        tsb.append(",");
+	        tsb.append(tweet.getRetweets());
+	        tsb.append("\n");
+	        
+	        if(tweet.getComments().size()>0)
+		        for(CommentDTO comment:tweet.getComments()){
+		        	csb.append(tweet.getCompanyName());
+			        csb.append(",");
+			        csb.append(tweet.getId().toString());
+			        csb.append(",");
+			        csb.append(comment.getComment());
+			        csb.append(",");
+			        csb.append(comment.getLikes());
+			        csb.append("\n");
+		        }
+	        
+			/*writer.write("TWEET ### "+tweet.getStatus()+"\n");
 			System.out.println("TWEET ### "+tweet.getStatus());
 			writer.write("##########Liked ## "+tweet.getLiked());
 			System.out.println("##########Liked ## "+tweet.getLiked());
@@ -224,7 +288,13 @@ public class Twitterr {
 					writer.write("##########COMMENT ## "+comment+"\n");
 					System.out.println("##########COMMENT ## "+comment);
 				}
-			}
+			}*/
 		}
+		tpw.write(tsb.toString());
+        tpw.close();
+        
+        cpw.write(csb.toString());
+        cpw.close();
+        
 	}
 }
